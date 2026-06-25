@@ -1,0 +1,188 @@
+/* RESET & VARIABLE WARNA GELAP BROWN PREMIUM */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    background-color: #1a1510; 
+    color: #e2e8f0; 
+}
+
+/* NAVIGASI ATAS (DARK BROWN VERSION) */
+.top-nav {
+    height: 70px;
+    background: #231c15; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: 1px solid #362e26;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.nav-brand { font-weight: 800; font-size: 20px; color: #d6ba99; display: flex; align-items: center; gap: 8px; } 
+.nav-brand .text-light { color: #8e7b68; font-weight: 400; }
+.nav-links { list-style: none; display: flex; gap: 30px; }
+.nav-link { 
+    text-decoration: none; color: #b59f8a; font-weight: 600; font-size: 14px;
+    padding: 8px 0; border-bottom: 2px solid transparent; transition: 0.3s;
+}
+.nav-link:hover, .nav-link.active { color: #d6ba99; border-bottom: 2px solid #d6ba99; } 
+.nav-collab { font-size: 13px; font-weight: 600; color: #b59f8a; background: #362e26; padding: 6px 12px; border-radius: 20px; }
+.menu-toggle { display: none; background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+
+/* LAYOUT PAGES */
+.page-content { display: none; }
+.page-content.active { display: block; }
+
+/* WELCOME SCREEN */
+.welcome-screen {
+    height: calc(100vh - 70px);
+    background-image: url("../img/Background Cover.png"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 24px;
+    position: relative;
+}
+.welcome-screen::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, rgba(35, 28, 21, 0.6) 0%, rgba(15, 10, 5, 0.9) 100%); 
+    z-index: 1;
+}
+.welcome-center { position: relative; z-index: 2; }
+.welcome-tag { color: #d6ba99; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 15px;}
+.welcome-screen h1 { font-size: 38px; font-weight: 800; line-height: 1.3; margin-bottom: 20px; color: #ffffff; }
+.welcome-screen p { font-size: 15px; color: #b59f8a; max-width: 650px; margin: 0 auto 40px; line-height: 1.6; }
+.scroll-down-btn { font-size: 12px; color: #64748b; animation: bounce 2s infinite; cursor: pointer; }
+.scroll-down-btn i { margin-top: 8px; font-size: 16px; color: #d6ba99; }
+
+/* KONTEN KARTU INFORMASI */
+.container { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+.info-card { 
+    background: #231c15; 
+    border: 1px solid #362e26; 
+    border-radius: 16px; 
+    padding: 35px; 
+    margin-bottom: 35px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+}
+.info-card h2 { margin-bottom: 20px; font-size: 20px; color: #ffffff; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.info-card p { font-size: 14px; line-height: 1.8; color: #b59f8a; margin-bottom: 15px; }
+
+.image-placeholder-box {
+    width: 100%;
+    background-color: #362e26; 
+    border: 2px dashed #4a3e33;
+    border-radius: 12px;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 20px;
+    position: relative;
+}
+.image-placeholder-box img { width: 100%; height: auto; object-fit: contain; z-index: 2; }
+.image-fallback-text { position: absolute; text-align: center; color: #64748b; font-size: 13px; z-index: 1; }
+
+/* MAP AREA UTAMA & CONTAINER WRAPPER */
+.map-wrapper { 
+    height: calc(100vh - 70px); 
+    position: relative; 
+    width: 100%;
+    overflow: hidden;
+}
+#map { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
+
+/* STYLING BOX PANEL MELAYANG PREMIUM (DARK THEME) */
+.map-overlay-box {
+    position: absolute;
+    background: rgba(35, 28, 21, 0.95); 
+    border: 1px solid #362e26;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    z-index: 10; /* Berdiri tegak di atas canvas peta */
+}
+
+/* Mengatur Posisi Box Search (Kiri Atas) */
+#search-box {
+    top: 20px;
+    left: 20px;
+    width: 270px;
+}
+.search-title, .control-title, .legend-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    color: #d6ba99;
+}
+.search-container { display: flex; gap: 6px; }
+#searchInput {
+    flex: 1; padding: 6px 10px;
+    border: 1px solid #4a3e33; border-radius: 4px;
+    background: #1a1510; color: #ffffff; font-size: 12px;
+}
+#searchBtn {
+    padding: 6px 12px; background: #d6ba99; color: #1a1510;
+    border: none; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 12px;
+}
+
+/* Mengatur Posisi Box Kontrol Layer (Kanan Atas) */
+#layer-control-box {
+    top: 20px;
+    right: 20px;
+    width: 240px;
+}
+.layer-list { display: flex; flex-direction: column; gap: 8px; }
+.control-label { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 12px; color: #b59f8a; }
+.control-label input { cursor: pointer; }
+
+/* Keterangan Warna Legenda UHI */
+.legend-title { margin-top: 15px; border-top: 1px dashed #4a3e33; padding-top: 10px; }
+.legend-item { display: flex; align-items: center; gap: 10px; font-size: 12px; margin-top: 6px; color: #b59f8a; }
+.legend-color { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+
+/* REVISI CUSTOM POP-UP PREMIUM */
+.maplibregl-popup-content {
+    background: #ffffff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+    padding: 14px !important;
+}
+.maplibregl-popup-close-button { color: #333 !important; font-size: 16px !important; padding: 4px 8px !important; }
+
+/* ANIMASI & MEDIA QUERY MOBILE */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    60% { transform: translateY(-4px); }
+}
+
+@media (max-width: 768px) {
+    .top-nav { padding: 0 20px; }
+    .nav-collab { display: none; }
+    .menu-toggle { display: block; }
+    .nav-links {
+        display: none; position: absolute; top: 70px; left: 0; width: 100%;
+        background: #231c15; flex-direction: column; gap: 0; padding: 10px 0;
+        border-bottom: 1px solid #362e26; box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+    }
+    .nav-links.active { display: flex; }
+    .nav-link { padding: 15px 24px; display: block; width: 100%; }
+    .welcome-screen h1 { font-size: 26px; }
+    .container { margin: 30px auto; }
+    .info-card { padding: 20px; border-radius: 12px; }
+    #search-box { width: calc(100% - 40px); top: 10px; left: 10px; }
+    #layer-control-box { width: calc(100% - 40px); top: auto; bottom: 20px; right: 10px; }
+}

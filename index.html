@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UHI & UGS Accessibility Dashboard</title>
+    
+    <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <i class="fa-solid fa-droplet text-brown"></i>
+            <span>Sistem Informasi Perencanaan <span class="text-light">Project</span></span>
+        </div>
+        
+        <button class="menu-toggle" onclick="toggleMobileMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" class="nav-link active" onclick="showPage('home')">Home & Penjelasan</a></li>
+            <li><a href="#" class="nav-link" onclick="showPage('map')">Peta Interaktif</a></li>
+        </ul>
+        <div class="nav-collab">
+            <span>GIS Kelompok 03</span>
+        </div>
+    </nav>
+
+    <main id="page-home" class="page-content active">
+        <header class="welcome-screen" style="padding-top: 140px; box-sizing: border-box;">
+            <div class="welcome-center">
+                <span class="welcome-tag">Interactive WebGIS Dashboard</span>
+                <h1>Urban Heat Island Vulnerability & <br>Urban Green Space Access</h1>
+                <p>Analisis spasial keterjangkauan ruang terbuka hijau dalam memitigasi suhu permukaan kota secara interaktif.</p>
+                <div class="scroll-down-btn">
+                    <span>Gulir untuk analisis</span><br>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <section class="info-card" id="latar-belakang">
+                <h2><i class="fa-solid fa-book-open text-brown"></i> Latar Belakang</h2>
+                <p style="line-height: 1.8; text-align: justify; color: #be7b68;">
+                    Urban Heat Island (UHI) merupakan tantangan lingkungan di Surabaya berupa suhu perkotaan yang meningkat akibat minimnya Ruang Terbuka Hijau (RTH). Web GIS ini menyajikan analisis spasial mengenai sebaran tingkat UHI, keterjangkauan RTH melalui pemodelan <i>Service Area</i>, serta integrasi data zonasi untuk memberikan solusi strategis dalam mitigasi panas kota yang berkelanjutan bagi masyarakat dan pemangku kebijakan.
+                </p>
+            </section>
+
+            <section class="info-card">
+                <h2><i class="fa-solid fa-diagram-project text-brown"></i> Bagan Alir Penelitian</h2>
+                <p>Berikut adalah diagram alir metodologi pengolahan data spasial yang kami gunakan dalam pemodelan ini:</p>
+                <div class="image-placeholder-box">
+                    <img src="img/bagan alir.png" alt="Bagan Alir Penelitian" onerror="this.style.display='none';">
+                    <div class="image-fallback-text"><i class="fa-regular fa-image"></i><br>[Gambar Bagan Alir (img/bagan alir.png)]</div>
+                </div>
+            </section>
+
+            <section class="info-card">
+                <h2><i class="fa-solid fa-sliders text-brown"></i> Perbandingan Data Mentah Spasial (Swipe Mode)</h2>
+                <p>Geser garis slider di tengah gambar untuk membandingkan sebaran kerapatan vegetasi (NDVI) dengan suhu permukaan (LST) Kota Surabaya secara langsung:</p>
+                
+                <div style="position: relative; width: 100%; max-width: 750px; height: 480px; margin: 25px auto; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); user-select: none;">
+                    <img src="img/data mentah LST.png" alt="Data Mentah LST" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; background: #231c15;">
+                    <div style="position: absolute; bottom: 15px; right: 15px; background: rgba(35, 28, 21, 0.85); color: #e6ccb2; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; border: 1px solid #362e26; z-index: 2;">
+                        📊 Data Mentah LST (Suhu Permukaan)
+                    </div>
+
+                    <div id="swipe-overlay-container" style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden; z-index: 1; border-right: 2px solid #d6ba99;">
+                        <img src="img/data mentah ndvi.png" alt="Data Mentah NDVI" style="position: absolute; top: 0; left: 0; width: 750px; height: 100%; object-fit: contain; background: #231c15;">
+                        <div style="position: absolute; bottom: 15px; left: 15px; background: rgba(35, 28, 21, 0.85); color: #d6ba99; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; border: 1px solid #362e26;">
+                            🌿 Data Mentah NDVI (Kerapatan Hijau)
+                        </div>
+                    </div>
+
+                    <div id="swipe-slider-handle" style="position: absolute; top: 0; left: 50%; width: 40px; height: 40px; background: #d6ba99; color: #231c15; border-radius: 50%; transform: translate(-50%, 220px); display: flex; align-items: center; justify-content: center; cursor: ew-resize; z-index: 3; box-shadow: 0 0 10px rgba(0,0,0,0.5); font-size: 14px; border: 3px solid #231c15;">
+                        <i class="fa-solid fa-arrows-left-right"></i>
+                    </div>
+                </div>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const container = document.getElementById('swipe-overlay-container').parentElement;
+                        const overlay = document.getElementById('swipe-overlay-container');
+                        const imgOverlay = overlay.querySelector('img');
+                        const handle = document.getElementById('swipe-slider-handle');
+                        let isResizing = false;
+
+                        function initResize() { imgOverlay.style.width = container.offsetWidth + 'px'; }
+                        window.addEventListener('resize', initResize);
+                        initResize();
+
+                        handle.addEventListener('mousedown', function() { isResizing = true; });
+                        window.addEventListener('mouseup', function() { isResizing = false; });
+                        handle.addEventListener('touchstart', function() { isResizing = true; });
+                        window.addEventListener('touchend', function() { isResizing = false; });
+
+                        window.addEventListener('mousemove', function(e) {
+                            if (!isResizing) return;
+                            let rect = container.getBoundingClientRect();
+                            let x = e.clientX - rect.left;
+                            if (x < 0) x = 0; if (x > rect.width) x = rect.width;
+                            let percentage = (x / rect.width) * 100;
+                            overlay.style.width = percentage + '%';
+                            handle.style.left = percentage + '%';
+                        });
+
+                        window.addEventListener('touchmove', function(e) {
+                            if (!isResizing) return;
+                            let rect = container.getBoundingClientRect();
+                            let x = e.touches[0].clientX - rect.left;
+                            if (x < 0) x = 0; if (x > rect.width) x = rect.width;
+                            let percentage = (x / rect.width) * 100;
+                            overlay.style.width = percentage + '%';
+                            handle.style.left = percentage + '%';
+                        });
+                    });
+                </script>
+            </section>
+
+            <section class="info-card">
+                <h2><i class="fa-solid fa-users text-brown"></i> Anggota Kelompok 3</h2>
+                <p style="margin-bottom: 20px;">Tim penyusun pengembangan dashboard Sistem Informasi Perencanaan Wilayah:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                    <div style="background: #231c15; padding: 15px 20px; border-radius: 8px; border: 1px solid #362e26; font-size: 14px; color: #be7b68;">1. Khanza Allayya Queenara (5015251012)</div>
+                    <div style="background: #231c15; padding: 15px 20px; border-radius: 8px; border: 1px solid #362e26; font-size: 14px; color: #be7b68;">2. Jeslyn Nadia Kristanti (5015251016)</div>
+                    <div style="background: #231c15; padding: 15px 20px; border-radius: 8px; border: 1px solid #362e26; font-size: 14px; color: #be7b68;">3. Ardi Ilham Falah (5015251077)</div>
+                    <div style="background: #231c15; padding: 15px 20px; border-radius: 8px; border: 1px solid #362e26; font-size: 14px; color: #be7b68;">4. Ghaniya Azalia Dianitara (5015251081)</div>
+                    <div style="background: #231c15; padding: 15px 20px; border-radius: 8px; border: 1px solid #362e26; font-size: 14px; color: #be7b68;">5. Aulia Fadilla Agustin (5015251085)</div>
+                    <div style="background: #231c15; padding: 15px 20px; border-radius: 8px; border: 1px solid #362e26; font-size: 14px; color: #be7b68;">6. Mazta Vivada Aryanegara (5015251094)</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <main id="page-map" class="page-content">
+        <div class="map-wrapper">
+            
+            <div id="map"></div>
+
+            <div id="search-box" class="map-overlay-box">
+                <div class="search-title">🔍 Cari Kecamatan</div>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Contoh: BUBUTAN...">
+                    <button id="searchBtn">Cari</button>
+                </div>
+            </div>
+
+            <div id="layer-control-box" class="map-overlay-box">
+                <div class="control-title">🗺️ Kontrol Layer</div>
+                <div class="layer-list">
+                    <label class="control-label">
+                        <input type="checkbox" id="chk-kecamatan" checked>
+                        <span class="layer-name">Kecamatan UHI (6-14)</span>
+                    </label>
+                    <label class="control-label">
+                        <input type="checkbox" id="chk-rth" checked>
+                        <span class="layer-name">Titik RTH Publik</span>
+                    </label>
+                    <label class="control-label">
+                        <input type="checkbox" id="chk-service5" checked>
+                        <span class="layer-name">Service Area 5 Menit</span>
+                    </label>
+                    <label class="control-label">
+                        <input type="checkbox" id="chk-service10" checked>
+                        <span class="layer-name">Service Area 10 Menit</span>
+                    </label>
+                    <label class="control-label">
+                        <input type="checkbox" id="chk-jalan" checked>
+                        <span class="layer-name">Jaringan Jalan</span>
+                    </label>
+                </div>
+
+                <div class="legend-title">🔴 Kerentanan UHI</div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #e74c3c;"></span>
+                    <span>Tinggi (Skor 12 - 14)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #f1c40f;"></span>
+                    <span>Sedang (Skor 9 - 11)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #2ecc71;"></span>
+                    <span>Rendah (Skor 6 - 8)</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
