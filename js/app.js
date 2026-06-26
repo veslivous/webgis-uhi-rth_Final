@@ -3,6 +3,14 @@
  * ENGINE REVISI FINAL ANTI-GAGAL - Kelompok 03 PWK (2026)
  */
 
+// --- FUNGSI AKTIVASI MENU NAVIGASI PADA LAYAR HP/MOBILE ---
+function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    if (navLinks) {
+        navLinks.classList.toggle('active');
+    }
+} 
+
 function showPage(pageId) {
     document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
