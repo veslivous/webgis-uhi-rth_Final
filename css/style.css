@@ -169,20 +169,34 @@ body {
     60% { transform: translateY(-4px); }
 }
 
+/* --- PERBAIKAN NAVIGASI MENU HP (TARUH DI DALAM MEDIA QUERY 768px) --- */
 @media (max-width: 768px) {
-    .top-nav { padding: 0 20px; }
-    .nav-collab { display: none; }
-    .menu-toggle { display: block; }
-    .nav-links {
-        display: none; position: absolute; top: 70px; left: 0; width: 100%;
-        background: #231c15; flex-direction: column; gap: 0; padding: 10px 0;
-        border-bottom: 1px solid #362e26; box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+    .menu-toggle {
+        display: block !important; /* Memastikan tombol garis 3 muncul di HP */
+        cursor: pointer;
     }
-    .nav-links.active { display: flex; }
-    .nav-link { padding: 15px 24px; display: block; width: 100%; }
-    .welcome-screen h1 { font-size: 26px; }
-    .container { margin: 30px auto; }
-    .info-card { padding: 20px; border-radius: 12px; }
-    #search-box { width: calc(100% - 40px); top: 10px; left: 10px; }
-    #layer-control-box { width: calc(100% - 40px); top: auto; bottom: 20px; right: 10px; }
+
+    .nav-links {
+        display: none; /* Sembunyikan default-nya di HP */
+        flex-direction: column;
+        position: absolute;
+        top: 70px; /* Sesuai tinggi navbar top-nav kamu */
+        left: 0;
+        width: 100%;
+        background-color: #231c15; /* Warna dark brown premium nav kamu */
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        z-index: 999;
+        gap: 15px !important;
+    }
+
+    /* KUNCI UTAMA: Ketika tombol diklik, JS menyuntikkan kelas 'active' dan memicu kode ini */
+    .nav-links.active {
+        display: flex !important; 
+    }
+    
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
 }
